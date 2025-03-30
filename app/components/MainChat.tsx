@@ -1,9 +1,10 @@
 "use client";
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { UserMessages } from '../contexts/UserMessages';
+import Message from './Message';
 
 function MainChat() {
-
+    const chatRef = useRef<HTMLDivElement>(null)
     const context = useContext(UserMessages)
 
     if (!context) {
@@ -12,11 +13,19 @@ function MainChat() {
 
     const { Messages } = context
 
+    useEffect(() => {
+        if (chatRef.current) {
+            chatRef.current.scrollTop = chatRef.current.scrollHeight;
+        }
+    }, [Messages])
+    
     return (
-        <div>
+        <div ref={chatRef} className='w-1/2 h-full overflow-y-auto pb-[65px]'>
             {
                 Messages.length != 0
-                ? <div>Messages Found!</div>
+                ? Messages.map((message, index) => (
+                    <Message key={index} message={message} />
+                ))
                 : <div>No Messages Found!</div>
             }
         </div>
