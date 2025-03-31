@@ -6,7 +6,7 @@ import MainChat from './MainChat';
 function Chat() {
 
     return (
-        <div className='w-full h-full flex flex-col items-center'>
+        <div className='w-full h-full flex justify-center'>
             <MainChat/>
             <SendMessage/>
         </div>

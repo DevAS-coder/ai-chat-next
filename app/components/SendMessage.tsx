@@ -12,25 +12,29 @@ function SendMessage() {
         return <div>No Messages Found!</div>
     }
 
-    const { setMessages } = context
+    const { setMessages, Messages } = context
 
     const [apiresponse, apisetresponse] = useState<string>('')
 
     const getResponse = async () => {
         setmessage('')
         setMessages((prev) => [...prev, message])
-        // const response = await fetch("/api/openRouter", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         message: message,
-        //     }),
-        // });
-        // const data = await response.json();
-        // apisetresponse(data.choices[0].message.content);
-
+        const response = await fetch("/api/openRouter", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                message: message + '(پاسخ کوتاه)',
+            }),
+        });
+        const data = await response.json();
+        const finalResponse = await data.choices[0].message
+        apisetresponse(finalResponse);
+        
+        setMessages((prev) => [...prev, finalResponse])
+        console.log(Messages)
+        
     };
 
 

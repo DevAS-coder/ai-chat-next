@@ -20,13 +20,15 @@ function MainChat() {
     }, [Messages])
     
     return (
-        <div ref={chatRef} className='w-1/2 h-full overflow-y-auto pb-[65px]'>
+        <div ref={chatRef} className='w-full lg:w-2/3 flex flex-col h-full overflow-y-auto pb-[65px]'>
             {
                 Messages.length != 0
                 ? Messages.map((message, index) => (
-                    <Message key={index} message={message} />
+                    message.role 
+                    ? <Message key={index} message={message.content} role="ai"/>
+                    : <Message key={index} message={message} role="user" />
                 ))
-                : <div>No Messages Found!</div>
+                : <div className='text-center flex flex-col h-full justify-center'>No Messages Found!</div>
             }
         </div>
     )
