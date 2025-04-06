@@ -7,15 +7,22 @@ function MainChat() {
     const chatRef = useRef<HTMLDivElement>(null);
     const context = useContext(UserMessages);
 
+    // چک کردن وجود context
+    if (!context) {
+        return <div>No Messages Found!</div>;
+    }
+
     const { Messages } = context;
 
     useEffect(() => {
-        if (chatRef.current) {
+        const chatElement = chatRef.current;
+
+        if (chatElement) {
             const intervalId = setInterval(() => {
-                chatRef.current!.scrollTop = chatRef.current!.scrollHeight;
+                chatElement.scrollTop = chatElement.scrollHeight;
             }, 100);
 
-            return () => clearInterval(intervalId); 
+            return () => clearInterval(intervalId);
         }
     }, [Messages]);
 
