@@ -1,26 +1,32 @@
-"use client"
+"use client";
 
-import { createContext, Dispatch, SetStateAction, useState } from "react"
+import { createContext, Dispatch, SetStateAction, useState, ReactNode } from "react";
+
+type MessageContent = {
+  role: "assistant" | "user";
+  content: string;
+  refusal?: null | string;
+};
+
+type Message = MessageContent; 
 
 type MESSAGECONTEXTT = {
-    Messages: any[],
-    setMessages: Dispatch<SetStateAction<any[]>>
-}
+  Messages: Message[];
+  setMessages: Dispatch<SetStateAction<Message[]>>;
+};
 
 type USERMESSAGEST = {
-    children: React.ReactNode
-}
+  children: ReactNode;
+};
 
-export const UserMessages = createContext<MESSAGECONTEXTT | null>(null)
+export const UserMessages = createContext<MESSAGECONTEXTT | null>(null);
 
-export const UserMessagesProvider : React.FC<USERMESSAGEST> = ({children}) => {
+export const UserMessagesProvider: React.FC<USERMESSAGEST> = ({ children }) => {
+  const [Messages, setMessages] = useState<Message[]>([]);
 
-    const [Messages, setMessages] = useState<any[]>([])
-
-    return (
-        <UserMessages.Provider value={{Messages, setMessages}}>
-            {children}
-        </UserMessages.Provider>
-    )
-}
-
+  return (
+    <UserMessages.Provider value={{ Messages, setMessages }}>
+      {children}
+    </UserMessages.Provider>
+  );
+};
