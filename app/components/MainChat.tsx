@@ -7,10 +7,6 @@ function MainChat() {
     const chatRef = useRef<HTMLDivElement>(null);
     const context = useContext(UserMessages);
 
-    if (!context) {
-        return <div>No Messages Found!</div>;
-    }
-
     const { Messages } = context;
 
     useEffect(() => {
