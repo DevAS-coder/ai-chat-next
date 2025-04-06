@@ -19,20 +19,21 @@ function SendMessage() {
     const getResponse = async () => {
         setmessage('')
         setMessages((prev) => [...prev, message])
+        setMessages((prev) => [...prev, {role: 'ai', content:'Wait For Response...'}])
         const response = await fetch("/api/openRouter", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                message: message + '(پاسخ کوتاه)',
+                message: message + '(پاسخ متوسط)',
             }),
         });
         const data = await response.json();
         const finalResponse = await data.choices[0].message
         apisetresponse(finalResponse);
         
-        setMessages((prev) => [...prev, finalResponse])
+        setMessages((prev) => [...prev.filter((msg)=>msg.content !== 'Wait For Response...'), finalResponse])
         console.log(Messages)
         
     };

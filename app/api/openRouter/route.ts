@@ -13,7 +13,7 @@ export async function POST(req: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "deepseek/deepseek-r1:free",
+        model: "google/gemini-2.0-flash-exp:free",
         messages: [
           {
             role: "user",
